@@ -114,12 +114,24 @@ function showInfographic() {
     }
 
     function addTiles(human, dinos) {
+
+        function createRandomInteger(max) {
+            return Math.Floor(Math.random * Math.Floor(max));
+        }
+        
+        function createFact(factList, dino, human) {
+
+        }
+
+
         const grid = document.getElementById('grid');
         // creating tiles fragment to reduce reflows and repaint
         const tiles = document.createDocumentFragment();
         // indexes array stores the possible indexes of dinos is dinos array
         // it is used to select dinos at random
         const indexes = [0, 1, 2, 3, 4, 5, 6, 7];
+        // list of possible facts, helper variable to choose facts at random
+        const factList = ['weight', 'height', 'location', 'time', 'fact', 'diet'];
         // use for loop to add 9 tiles
         for (i = 0; i < 9; i++) {
             const tile = document.createElement('div');
