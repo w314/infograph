@@ -135,9 +135,13 @@ function showInfographic() {
             tile.appendChild(picture);
             tiles.appendChild(tile);
         }
-        const form = document.getElementById('dino-compare');
-        form.classList.toggle('hidden');
         grid.appendChild(tiles);
+    }
+
+
+    function hideForm() {
+        const form = document.getElementById('dino-compare');
+        form.classList.toggle('hidden');        
     }
 
 
@@ -164,6 +168,7 @@ function showInfographic() {
 
     const human = createHuman();
     const dinos = createDinos();
+    hideForm();
     addTiles(human, dinos);
 
 }

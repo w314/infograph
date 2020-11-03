@@ -35,6 +35,12 @@ p {
     font-weight: 100;
 }
 
+
+.hidden {
+    display: None;
+}
+
+
 /* Grid Styles */
 #grid {
     background: #fff url(images/tracks.png) no-repeat;
