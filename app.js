@@ -116,10 +116,11 @@ function showInfographic() {
     function addTiles(human, dinos) {
 
         function createRandomInteger(max) {
-            return Math.Floor(Math.random * Math.Floor(max));
+            return Math.floor(Math.random * Math.floor(max));
         }
         
         function createFact(factList, dino, human) {
+            return 'This is a fact';
 
         }
 
@@ -146,16 +147,17 @@ function showInfographic() {
             }
             else {
                 // create random integer between 0 and the current length of the indexes array
-                const randomNum = Math.floor(Math.random() * indexes.length)
+                const randomNum = createRandomInteger(indexes.length);
                 // store and remove the randomly selected index
                 // use it for add a dino to the tile
                 const index = indexes.splice(randomNum, 1)[0]; 
+                const dino = dinos[index];
                 console.log(`dino index: ${index}`);
-                tileName.innerText = dinos[index].name;
+                tileName.innerText = dino.name;
                 tileImage.src = `./images/${dinos[index].name}.png`;
+                tileFact.innerText = createFact(factList, dino, human);
                 tile.appendChild(tileFact);
             }
-            tileFact.innerText = 'This is a fact.';
             tile.appendChild(tileName);
             tile.appendChild(tileImage);
             tiles.appendChild(tile);
