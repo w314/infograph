@@ -130,3 +130,7 @@ function gameOn() {
 }
 
 // On button click, prepare and display infographic
+const button = document.getElementById('btn');
+button.addEventListener('click', () => {
+    gameOn();
+});
