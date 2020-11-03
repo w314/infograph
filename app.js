@@ -116,14 +116,18 @@ function showInfographic() {
     function addTiles(human, dinos) {
 
         function createRandomInteger(max) {
-            return Math.floor(Math.random * Math.floor(max));
+            console.log(`max number: ${max}`);
+            const randomNumber = Math.floor(Math.random() * Math.floor(max));
+            console.log(`random number: ${randomNumber}`);
+            // return Math.floor(Math.random * Math.floor(max));
+            return randomNumber;
         }
         
         function createFact(factList, dino, human) {
             if (dino.name === 'Pigeon') {
                 return 'All birds are dinosaurs.';
             }
-            
+
             return 'This is a fact';
 
         }
@@ -137,6 +141,13 @@ function showInfographic() {
         const indexes = [0, 1, 2, 3, 4, 5, 6, 7];
         // list of possible facts, helper variable to choose facts at random
         const factList = ['weight', 'height', 'location', 'time', 'fact', 'diet'];
+        // as we need 7 fact add one fact at random
+        const factIndex = createRandomInteger(factList.length);
+        console.log(`factIndex: ${factIndex}`);
+        const extraFact = factList[createRandomInteger(factList.length)];
+        console.log(`extra fact: ${extraFact}`);
+        factList.push(extraFact);
+        console.log(`extended factList: ${factList}`);
         // use for loop to add 9 tiles
         for (i = 0; i < 9; i++) {
             const tile = document.createElement('div');
@@ -152,6 +163,9 @@ function showInfographic() {
             else {
                 // create random integer between 0 and the current length of the indexes array
                 const randomNum = createRandomInteger(indexes.length);
+                // console.log(`indexes length: ${indexes.length}`);
+                // const randomNum = Math.floor(Math.random * indexes.length);
+                // console.log(`randomNum for dinoArray: ${randomNum}`);
                 // store and remove the randomly selected index
                 // use it for add a dino to the tile
                 const index = indexes.splice(randomNum, 1)[0]; 
