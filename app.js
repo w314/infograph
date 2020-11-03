@@ -120,6 +120,10 @@ function showInfographic() {
         }
         
         function createFact(factList, dino, human) {
+            if (dino.name === 'Pigeon') {
+                return 'All birds are dinosaurs.';
+            }
+            
             return 'This is a fact';
 
         }
