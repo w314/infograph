@@ -115,24 +115,37 @@ function showInfographic() {
 
     function addTiles(human, dinos) {
         const grid = document.getElementById('grid');
+        // creating tiles fragment to reduce reflows and repaint
         const tiles = document.createDocumentFragment();
-        const numbers = [0, 1, 2, 3, 4, 5, 6, 7];
+        // indexes array stores the possible indexes of dinos is dinos array
+        // it is used to select dinos at random
+        const indexes = [0, 1, 2, 3, 4, 5, 6, 7];
+        // use for loop to add 9 tiles
         for (i = 0; i < 9; i++) {
-            const picture = document.createElement('img');
             const tile = document.createElement('div');
+            const tileImage = document.createElement('img');
+            const tileName = document.createElement('h3');
+            const tileFact = document.createElement('p');
             tile.classList = 'grid-item'; 
+            // if it's the middle tile add human
             if (i === 4) {
-                tile.innerText = 'human'
-                picture.src = `./images/human.png`;
+                tileName.innerText = human.name;
+                tileImage.src = `./images/human.png`;
             }
             else {
-                const randomNum = Math.floor(Math.random() * numbers.length)
-                const index = numbers.splice(randomNum, 1)[0]; 
+                // create random integer between 0 and the current length of the indexes array
+                const randomNum = Math.floor(Math.random() * indexes.length)
+                // store and remove the randomly selected index
+                // use it for add a dino to the tile
+                const index = indexes.splice(randomNum, 1)[0]; 
                 console.log(`dino index: ${index}`);
-                tile.innerText = dinos[index].name;
-                picture.src = `./images/${dinos[index].name}.png`;
+                tileName.innerText = dinos[index].name;
+                tileImage.src = `./images/${dinos[index].name}.png`;
+                tile.appendChild(tileFact);
             }
-            tile.appendChild(picture);
+            tileFact.innerText = 'This is a fact.';
+            tile.appendChild(tileName);
+            tile.appendChild(tileImage);
             tiles.appendChild(tile);
         }
         grid.appendChild(tiles);
