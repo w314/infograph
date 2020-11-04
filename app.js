@@ -46,7 +46,7 @@ function showInfographic() {
             {
                 "species": "Brachiosaurus",
                 "weight": 70000,
-                "height": "372",
+                "height": 372,
                 "diet": "herbavor",
                 "where": "North America",
                 "when": "Late Jurasic",
@@ -101,6 +101,71 @@ function showInfographic() {
             this.fact = fact;
         }
 
+        // create Dino methods
+
+        Dino.prototype.compareWeight = function(weight) {
+            const weightDifference = this.weight *1 - weight *1;
+            if(weightDifference > 0) {
+                return `I'm ${weightDifference} lbs heavier than you.`;
+            } 
+
+            if (weightDifference < 0) {
+                return `I'm ${weightDifference * -1} lbs lighter than you`;
+            } 
+
+            return `We have the exact same weight!`;
+        }
+
+
+        Dino.prototype.compareHeight = function(height) {
+            const heightDifference = this.height * 1 - height * 1;
+
+            if(heightDifference > 0) {
+                return `I'm ${heightDifference} inches taller than you.`;
+            } 
+            
+            if (heightDifference < 0) {
+                return `I'm ${heightDifference * -1} inches smaller than you`;
+            } 
+
+            return `We are the exact same height!`;
+        }
+
+
+        Dino.prototype.compareDiet = function(diet) {
+            const humanDiet = diet.toLowerCase();
+
+            if (this.diet === humanDiet) {
+                return 'We like the exact same food';
+            }
+
+            if (humanDiet === 'omnivor') {
+                if (this.diet === 'carnivor') {
+                    return 'I only eat meat, looks like you eat vegetables too.';
+                }
+                else if (this.diet === 'herbavor') {
+                    return 'I only eat vegetables, looks like you eat meat too.';
+                }
+            }
+
+            if (humanDiet === 'carnivor') {
+                if (this.diet === 'omnivor') {
+                    return 'Looks like you don\'t eat vegetables, I like those too.';
+                }
+                else if (this.diet === 'herbavor') {
+                    return 'Looks like you only eat meat, me? not a bite of those.';
+                }
+            }
+
+            if (humanDiet === 'herbavor') {
+                if (this.diet === 'omnivor') {
+                    return 'I see you don\'t eat meat, I like meat too.';
+                }
+                else if (this.diet == 'carnivore') {
+                    return 'I see you don\'t eat meat at all, that the only thin I eat';
+                }
+            }
+        }
 
 
         // create array of Dino objects based on dinoFacts
@@ -116,38 +181,50 @@ function showInfographic() {
     function addTiles(human, dinos) {
 
         function createRandomInteger(max) {
-            console.log(`max number: ${max}`);
-            const randomNumber = Math.floor(Math.random() * Math.floor(max));
-            console.log(`random number: ${randomNumber}`);
-            // return Math.floor(Math.random * Math.floor(max));
-            return randomNumber;
+            return Math.floor(Math.random() * Math.floor(max));
         }
         
         function createFact(factList, dino, human) {
+            const simpleFacts = ['location', 'time', 'fact'];
+
             if (dino.name === 'Pigeon') {
                 return 'All birds are dinosaurs.';
             }
 
-            return 'This is a fact';
+            // select random fact from factList
+            const fact = factList.splice(createRandomInteger(factList.length), 1)[0];
+            if (simpleFacts.includes(fact)) {
+                return dino[fact];
+            }
+            
+            switch (fact) {
+                case 'weight':
+                    return dino.compareWeight(human.weight);
+                    break;
+                case 'height':
+                    return dino.compareHeight(human.height);
+                    break;
+                case 'diet':
+                    return dino.compareDiet(human.diet);
+            }
 
         }
 
 
         const grid = document.getElementById('grid');
+
         // creating tiles fragment to reduce reflows and repaint
         const tiles = document.createDocumentFragment();
         // indexes array stores the possible indexes of dinos is dinos array
         // it is used to select dinos at random
         const indexes = [0, 1, 2, 3, 4, 5, 6, 7];
+
         // list of possible facts, helper variable to choose facts at random
         const factList = ['weight', 'height', 'location', 'time', 'fact', 'diet'];
-        // as we need 7 fact add one fact at random
-        const factIndex = createRandomInteger(factList.length);
-        console.log(`factIndex: ${factIndex}`);
-        const extraFact = factList[createRandomInteger(factList.length)];
-        console.log(`extra fact: ${extraFact}`);
-        factList.push(extraFact);
+        // as we need 7 fact add one of the fact at random
+        factList.push(factList[createRandomInteger(factList.length)]);
         console.log(`extended factList: ${factList}`);
+
         // use for loop to add 9 tiles
         for (i = 0; i < 9; i++) {
             const tile = document.createElement('div');
@@ -163,17 +240,18 @@ function showInfographic() {
             else {
                 // create random integer between 0 and the current length of the indexes array
                 const randomNum = createRandomInteger(indexes.length);
-                // console.log(`indexes length: ${indexes.length}`);
-                // const randomNum = Math.floor(Math.random * indexes.length);
-                // console.log(`randomNum for dinoArray: ${randomNum}`);
                 // store and remove the randomly selected index
                 // use it for add a dino to the tile
                 const index = indexes.splice(randomNum, 1)[0]; 
+
                 const dino = dinos[index];
                 console.log(`dino index: ${index}`);
                 tileName.innerText = dino.name;
                 tileImage.src = `./images/${dinos[index].name}.png`;
-                tileFact.innerText = createFact(factList, dino, human);
+                const dinoFact = createFact(factList, dino, human);
+                console.log(`returned fact: ${dinoFact}`);
+                // tileFact.innerText = createFact(factList, dino, human);
+                tileFact.innerText = dinoFact;
                 tile.appendChild(tileFact);
             }
             tile.appendChild(tileName);
