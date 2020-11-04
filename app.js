@@ -349,7 +349,9 @@ function showInfographic() {
         });
 
         // append button to document
+        control.innerHTML = '';
         control.appendChild(refreshButton);
+
 
     }
 
