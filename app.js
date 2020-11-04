@@ -3,6 +3,33 @@
 */
 function showInfographic() {
 
+
+    function checkInput() {
+        let message = '';
+
+        const name =  document.getElementById('name').value;
+        const feet = document.getElementById('feet').value;
+        const inches = document.getElementById('inches').value;
+        const weight = document.getElementById('weight').value;
+        const diet = document.getElementById('diet').value;
+
+
+        if (!name) {
+            message = 'Name is required!';
+        }
+        if (!feet && !inches) {
+            message += '\nHeight is required';
+        }
+        if (!weight) {
+            message += '\nWeight is required';
+        }
+
+        if (message) {
+            alert(message);
+        }
+        return message;
+    }
+
     /**
     * @description Creates human object
     */
@@ -362,6 +389,13 @@ function showInfographic() {
     function hideForm() {
         const form = document.getElementById('dino-compare');
         form.classList.add('hidden');
+    }
+
+
+    // check input
+    const errorMessage = checkInput();
+    if (errorMessage) {
+        return;
     }
 
 
