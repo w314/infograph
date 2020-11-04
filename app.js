@@ -1,10 +1,10 @@
 /**
-* @ description Shows an infograpic
+* @description Shows an infograpic
 */
 function showInfographic() {
 
     /**
-    * @ description Creates human object
+    * @description Creates human object
     */
     function createHuman() {
         return {
@@ -18,7 +18,7 @@ function showInfographic() {
 
 
     /**
-    * @ description Creates an array of Dino objects object
+    * @description Creates an array of Dino objects object
     */
     function createDinos() {
         // copy of dino facts from JSON file
@@ -98,18 +98,17 @@ function showInfographic() {
         ]
 
         /**
-        * @ description Represents a dino
-        * @ constructor
-        * @ param {string} species
-        * @ param {number} weight
-        * @ param {number} height
-        * @ param {string} diet
-        * @ param {string} where - Location of the dino
-        * @ param {string} when - The time period, the dino lived
-        * @ param {string} fact - Fact about the dino
+        * @description Represents a dino
+        * @constructor
+        * @param {string} species
+        * @param {number} weight
+        * @param {number} height
+        * @param {string} diet
+        * @param {string} where - Location of the dino
+        * @param {string} when - The time period, the dino lived
+        * @param {string} fact - Fact about the dino
         */
         function Dino(species, weight, height, diet, where, when, fact) {
-            console.log(`Type of weght: ${typeof(weight)}`);
             this.name = species;
             this.weight = weight;
             this.height = height;
@@ -151,8 +150,8 @@ function showInfographic() {
 
         Dino.prototype.compareDiet = function(diet) {
             const humanDiet = diet.toLowerCase();
-            console.log(`human diet: ${humanDiet}`);
-            console.log(`dino diet: ${this.diet}`);
+            // console.log(`human diet: ${humanDiet}`);
+            // console.log(`dino diet: ${this.diet}`);
             // let fact = '';
 
             if (this.diet === humanDiet) {
@@ -200,27 +199,27 @@ function showInfographic() {
 
 
     /**
-    * @ description Creates infographic
-    * @ param {object} human
-    * @ param {object} dinos - Array of Dino objects
+    * @description Creates infographic
+    * @param {object} human
+    * @param {object} dinos - Array of Dino objects
     */
     function addTiles(human, dinos) {
 
         /**
-        * @ description Creates random integer
-        * @ param {number} max - Maximum random number to be generated
-        * @ returns {number} Random integer between 0 (inclusive) and max (inclusive)
+        * @description Creates random integer
+        * @param {number} max - Maximum random number to be generated
+        * @returns {number} Random integer between 0 (inclusive) and max (inclusive)
         */
         function createRandomInteger(max) {
             return Math.floor(Math.random() * Math.floor(max));
         }
 
         /**
-        * @ description Creates random fact for dino tile
-        * @ param {object} factList - List of fact types to choose from
-        * @ param {object} dino - Dino object to create a fact for
-        * @ param {object} human - Human object to compare Dino to if needed
-        * @ returns {string} Random fact to display
+        * @description Creates random fact for dino tile
+        * @param {object} factList - List of fact types to choose from
+        * @param {object} dino - Dino object to create a fact for
+        * @param {object} human - Human object to compare Dino to if needed
+        * @returns {string} Random fact to display
         */
         function createFact(factList, dino, human) {
 
@@ -327,9 +326,9 @@ function showInfographic() {
 
 
     /**
-    * @ description Creates button to refresh infographic
-    * @ param {object} human
-    * @ param {object} dinos - Array of Dino objects
+    * @description Creates button to refresh infographic
+    * @param {object} human
+    * @param {object} dinos - Array of Dino objects
     */
     function addControls(human, dinos) {
         // const grid = document.getElementById('grid');
@@ -356,44 +355,27 @@ function showInfographic() {
 
 
     /**
-    * @ description Hides user input form
+    * @description Hides user input form
     */
     function hideForm() {
         const form = document.getElementById('dino-compare');
-        form.classList.toggle('hidden');
+        form.classList.add('hidden');
     }
 
 
-    // Use IIFE to get human data from form
-
-
-    // Create Dino Compare Method 1
-    // NOTE: Weight in JSON file is in lbs, height in inches.
-
-
-    // Create Dino Compare Method 2
-    // NOTE: Weight in JSON file is in lbs, height in inches.
-
-
-    // Create Dino Compare Method 3
-    // NOTE: Weight in JSON file is in lbs, height in inches.
-
-
-    // Generate Tiles for each Dino in Array
-
-        // Add tiles to DOM
-
-    // Remove form from screen
-
+    // create human object
     const human = createHuman();
+    // create array of dino objects
     const dinos = createDinos();
+    // hide user input form
     hideForm();
+    // add infographic control panel
     addControls(human, dinos);
+    // add infographic
     addTiles(human, dinos);
 
-}
 
-// On button click, prepare and display infographic
+}// On button click, prepare and display infographic
 const button = document.getElementById('btn');
 button.addEventListener('click', () => {
     showInfographic();
