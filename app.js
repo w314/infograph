@@ -212,6 +212,8 @@ function showInfographic() {
 
 
         const grid = document.getElementById('grid');
+        // empty grid, usefull when recreateing tiles
+        grid.innerHTML = '';
 
         // creating tiles fragment to reduce reflows and repaint
         const tiles = document.createDocumentFragment();
@@ -261,6 +263,18 @@ function showInfographic() {
         grid.appendChild(tiles);
     }
 
+    function addControls(human, dinos) {
+        const grid = document.getElementById('grid');
+        const control = document.getElementById('control');
+        const restartButton = document.createElement('button');
+        restartButton.innerText = 'Compare Me Again';
+        console.log(`restart button: ${restartButton}`);
+        restartButton.addEventListener('click', () => {
+           addTiles(human, dinos);
+        });
+        control.appendChild(restartButton);
+    }
+
 
     function hideForm() {
         const form = document.getElementById('dino-compare');
@@ -292,6 +306,7 @@ function showInfographic() {
     const human = createHuman();
     const dinos = createDinos();
     hideForm();
+    addControls(human, dinos);
     addTiles(human, dinos);
 
 }
