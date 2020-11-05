@@ -277,7 +277,7 @@ function showInfographic() {
             }
 
             // if comparision is needed call relevant method of dino object
-            const compareMethod = 'compare' + fact[0].toUpperCase() + fact.slice(1,);
+            const compareMethod = 'compare' + fact[0].toUpperCase() + fact.slice(1);
             return dino[compareMethod](human[fact]);
         }
 
@@ -362,8 +362,9 @@ function showInfographic() {
         // create button to refresh inforgraphic
         const refreshButton = document.createElement('button');
 
-        // add text to button
+        // add text & style to button
         refreshButton.innerText = 'Compare Me Again';
+        refreshButton.classList.add('button');
         // console.log(`restart button: ${restartButton}`);
         // add event click evenet listener to recreate infographic
         refreshButton.addEventListener('click', () => {
