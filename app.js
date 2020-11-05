@@ -5,35 +5,44 @@ function showInfographic() {
 
 
     function checkInput() {
-        let message = '';
 
+        // store errorMessages
+        let errorMessage = '';
+
+        // get input from DOM
         const name =  document.getElementById('name').value;
         const feet = document.getElementById('feet').value;
         const inches = document.getElementById('inches').value;
         const weight = document.getElementById('weight').value;
         const diet = document.getElementById('diet').value;
 
-
+        // check for missing input values
         if (!name) {
-            message = 'Name is required!';
+            errorMessage = 'Name is required!';
         }
+        // one height mesurement should be filled out
         if (!feet && !inches) {
-            message += '\nHeight is required';
+            errorMessage += '\nHeight is required';
         }
         if (!weight) {
-            message += '\nWeight is required';
+            errorMessage += '\nWeight is required';
         }
 
-        if (message) {
-            alert(message);
-        }
-        return message;
+
+        // return input values and errorMessage
+        return{
+            errorMessage,
+            name,
+            height: feet *12 + inches * 1,
+            weight,
+            diet
+        };
     }
 
     /**
     * @description Creates human object
     */
-    function createHuman() {
+    function createHuman(input) {
         return {
             name: document.getElementById('name').value,
             weight: document.getElementById('weight').value,
@@ -392,15 +401,17 @@ function showInfographic() {
     }
 
 
-    // check input
-    const errorMessage = checkInput();
-    if (errorMessage) {
+    // use input values to create human object
+    const human = checkInput();
+    // if there are errors with input values
+    if (human.errorMessage) {
+        // alert user
+        alert(human.errorMessage);
+        // quit program
         return;
     }
 
 
-    // create human object
-    const human = createHuman();
     // create array of dino objects
     const dinos = createDinos();
     // hide user input form
