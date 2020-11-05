@@ -277,19 +277,10 @@ function showInfographic() {
             }
 
             // if comparision is needed call relevant method of dino object
-            // TODO use? return dino[varaible](human[variable])???
-            switch (fact) {
-                case 'weight':
-                    return dino.compareWeight(human.weight);
-                    break;
-                case 'height':
-                    return dino.compareHeight(human.height);
-                    break;
-                case 'diet':
-                    return dino.compareDiet(human.diet);
-            }
-
+            const compareMethod = 'compare' + fact[0].toUpperCase() + fact.slice(1,);
+            return dino[compareMethod](human[fact]);
         }
+
 
         const grid = document.getElementById('grid');
         // empty grid, usefull when recreating infographic
@@ -303,7 +294,7 @@ function showInfographic() {
         const indexes = [0, 1, 2, 3, 4, 5, 6, 7];
 
         // list of possible facts, helper variable to choose facts at random
-        const factList = Object.keys(dinos[0]);
+        const factList = ['weight', 'height', 'diet', 'location', 'time', 'fact'];
         // as we need 7 fact add one of the fact at random
         factList.push(factList[createRandomInteger(factList.length)]);
 
