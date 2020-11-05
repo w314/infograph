@@ -4,6 +4,10 @@
 function showInfographic() {
 
 
+    /**
+    * @description Gets input values from form and checks for missing values
+    * @returns {object} Object with input values and an erroMessage with errors
+    */
     function checkInput() {
 
         // store errorMessages
@@ -38,6 +42,7 @@ function showInfographic() {
             diet
         };
     }
+
 
     /**
     * @description Creates human object
@@ -156,7 +161,7 @@ function showInfographic() {
 
         // create Dino methods
         Dino.prototype.compareWeight = function(weight) {
-            const weightDifference = this.weight *1 - weight *1;
+            const weightDifference = this.weight - weight;
             if(weightDifference > 0) {
                 return `I'm ${weightDifference} lbs heavier than you.`;
             }
@@ -170,7 +175,7 @@ function showInfographic() {
 
 
         Dino.prototype.compareHeight = function(height) {
-            const heightDifference = this.height * 1 - height * 1;
+            const heightDifference = this.height - height;
 
             if(heightDifference > 0) {
                 return `I'm ${heightDifference} inches taller than you.`;
@@ -186,18 +191,12 @@ function showInfographic() {
 
         Dino.prototype.compareDiet = function(diet) {
             const humanDiet = diet.toLowerCase();
-            // console.log(`human diet: ${humanDiet}`);
-            // console.log(`dino diet: ${this.diet}`);
-            // let fact = '';
 
             if (this.diet === humanDiet) {
                 return 'We like the exact same food';
             }
 
             if (humanDiet === 'omnivor') {
-                // fact = this.diet === 'carnivor' ?
-                //     'I only eat meat, looks like you eat vegetables too.' :
-                //     'I only eat vegetables, looks like you eat meat too.';
                 if (this.diet === 'carnivor') {
                     return 'I only eat meat, looks like you eat vegetables too.';
                 } else if (this.diet === 'herbavor') {
@@ -239,7 +238,8 @@ function showInfographic() {
     * @param {object} human
     * @param {object} dinos - Array of Dino objects
     */
-    function addTiles(human, dinos) {
+    function addInfographic(human, dinos) {
+
 
         /**
         * @description Creates random integer
@@ -249,6 +249,7 @@ function showInfographic() {
         function createRandomInteger(max) {
             return Math.floor(Math.random() * Math.floor(max));
         }
+
 
         /**
         * @description Creates random fact for dino tile
@@ -290,26 +291,23 @@ function showInfographic() {
 
         }
 
-
         const grid = document.getElementById('grid');
-        // empty grid, usefull when recreating tiles
+        // empty grid, usefull when recreating infographic
         grid.innerHTML = '';
 
-        // creating tiles fragment to reduce reflows and repaint
-        const tiles = document.createDocumentFragment();
+        // creating infographic fragment to reduce reflows and repaint
+        const infographic = document.createDocumentFragment();
 
         // indexes array stores the possible indexes of dinos is dinos array
         // it is used to select dinos at random
         const indexes = [0, 1, 2, 3, 4, 5, 6, 7];
 
         // list of possible facts, helper variable to choose facts at random
-        // TODO: use dino.keys() ?
-        const factList = ['weight', 'height', 'location', 'time', 'fact', 'diet'];
+        const factList = Object.keys(dinos[0]);
         // as we need 7 fact add one of the fact at random
         factList.push(factList[createRandomInteger(factList.length)]);
-        // console.log(`extended factList: ${factList}`);
 
-        // use for loop to add 9 tiles
+        // use for loop to add 9 tiles to infographic
         for (i = 0; i < 9; i++) {
             // create element for tile (div), it's name (h3), image (img) and fact (p)
             const tile = document.createElement('div');
@@ -332,14 +330,11 @@ function showInfographic() {
                 // use it for add a dino to the tile
                 const index = indexes.splice(randomNum, 1)[0];
                 const dino = dinos[index];
-                // console.log(`dino index: ${index}`);
 
                 // add dino name, image and fact
                 tileName.innerText = dino.name;
                 tileImage.src = `./images/${dinos[index].name}.png`;
                 const dinoFact = createFact(factList, dino, human);
-                // console.log(`returned fact: ${dinoFact}`);
-                // tileFact.innerText = createFact(factList, dino, human);
                 tileFact.innerText = dinoFact;
 
                 // append fact to tile done here, as human don't need a fact
@@ -352,12 +347,12 @@ function showInfographic() {
             // add style to tile
             tile.classList = 'grid-item';
 
-            //append tile to infographic (tiles)
-            tiles.appendChild(tile);
+            //append tile to infographic
+            infographic.appendChild(tile);
         }
 
-        // append infograpic(tiles) to documentd
-        grid.appendChild(tiles);
+        // append infograpic to document
+        grid.appendChild(infographic);
     }
 
 
@@ -379,16 +374,14 @@ function showInfographic() {
         // add text to button
         refreshButton.innerText = 'Compare Me Again';
         // console.log(`restart button: ${restartButton}`);
-        // add event click evenet listener to recreate tiles
+        // add event click evenet listener to recreate infographic
         refreshButton.addEventListener('click', () => {
-           addTiles(human, dinos);
+           addInfographic(human, dinos);
         });
 
         // append button to document
         control.innerHTML = '';
         control.appendChild(refreshButton);
-
-
     }
 
 
@@ -419,7 +412,7 @@ function showInfographic() {
     // add infographic control panel
     addControls(human, dinos);
     // add infographic
-    addTiles(human, dinos);
+    addInfographic(human, dinos);
 
 
 }// On button click, prepare and display infographic
