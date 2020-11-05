@@ -324,7 +324,8 @@ function showInfographic() {
 
                 // add dino name, image and fact
                 tileName.innerText = dino.name;
-                const src = `./images/${dino.name}.png`;
+                // const src = `./images/${dino.name}.png`;
+                const src = `./images/${dino.name.toLowerCase()}.png`;
                 console.log(`image link: ${src}`);
                 tileImage.src = src;
                 // tileImage.src = `./images/${dino.name}.png`;
